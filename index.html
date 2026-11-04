@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Noesis Harmonia - Portal Hubungan Internasional</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: linear-gradient(135deg, #0f051d 0%, #1a0826 40%, #000000 100%);
+      color: #e2d9f3;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid rgba(147, 51, 234, 0.3); padding-bottom: 20px; }
+    header h1 { color: #a855f7; font-size: 2.2rem; letter-spacing: 2px; }
+    header p { color: #c084fc; font-style: italic; }
+    
+    .nav-buttons { display: flex; gap: 15px; justify-content: center; margin-bottom: 30px; }
+    .nav-btn {
+      background: linear-gradient(45deg, #6b21a8, #3b0764);
+      color: white; border: 1px solid #a855f7; padding: 12px 25px; border-radius: 8px;
+      cursor: pointer; transition: all 0.3s; font-weight: bold; display: flex; align-items: center; gap: 10px;
+    }
+    .nav-btn:hover { background: linear-gradient(45deg, #7e22ce, #581c87); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); }
+    
+    .card { background: rgba(20, 10, 35, 0.85); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 8px; color: #d8b4fe; font-weight: 600; }
+    input, select, textarea {
+      width: 100%; padding: 12px; background: rgba(10, 5, 20, 0.9); border: 1px solid #7e22ce;
+      border-radius: 6px; color: white; font-size: 1rem; outline: none; transition: 0.3s;
+    }
+    input:focus, select:focus { border-color: #c084fc; box-shadow: 0 0 10px rgba(192, 132, 252, 0.5); }
+    
+    .info-box { background: rgba(59, 7, 100, 0.4); border-left: 4px solid #a855f7; padding: 12px; margin-top: 8px; font-size: 0.9rem; }
+    
+    .radio-group { display: flex; gap: 20px; }
+    .radio-label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: #e2d9f3; }
+    
+    .btn-submit { width: 100%; background: linear-gradient(90deg, #9333ea, #4c1d95); color: white; border: none; padding: 14px; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .btn-submit:hover { background: linear-gradient(90deg, #a855f7, #6b21a8); }
+    
+    .section { display: none; }
+    .active-section { display: block; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
+    th, td { border: 1px solid rgba(168, 85, 247, 0.3); padding: 10px; text-align: left; }
+    th { background: rgba(88, 28, 135, 0.8); color: #f3e8ff; }
+    tr:nth-child(even) { background: rgba(15, 5, 29, 0.5); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-globe-stan"></i> NOESIS HARMONIA</h1>
+      <p>Portal Absensi & Informasi Hubungan Internasional</p>
+    </header>
+
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="switchTab('absensi')"><i class="fas fa-user-check"></i> Form Absensi</button>
+      <button class="nav-btn" onclick="switchTab('jadwal')"><i class="fas fa-calendar-alt"></i> Informasi & Jadwal</button>
+    </div>
+
+    <!-- SEKSI 1: ABSENSI -->
+    <div id="absensi" class="section active-section">
+      <div class="card">
+        <h2 style="color: #c084fc; margin-bottom: 20px;"><i class="fas fa-pen-nib"></i> Form Presensi Kehadiran</h2>
+        <form id="formAbsensi" onsubmit="handleAbsensiSubmit(event)">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="nama" required placeholder="Masukkan Nama Anda">
+          </div>
+          
+          <div class="form-group">
+            <label>NIM</label>
+            <input type="text" id="nim" required placeholder="Masukkan NIM Anda">
+          </div>
+
+          <div class="form-group">
+            <label>Kelas</label>
+            <select id="kelas" required>
+              <option value="">-- Pilih Kelas --</option>
+              <option value="HI 1">HI 1</option>
+              <option value="HI 2">HI 2</option>
+              <option value="Mengulang">Mengulang</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Mata Kuliah</label>
+            <select id="matkul" onchange="updateJadwalInfo()" required>
+              <option value="">-- Pilih Mata Kuliah --</option>
+              <option value="Kewirausahaan I">Kewirausahaan I</option>
+              <option value="Bahasa Inggris II">Bahasa Inggris II</option>
+              <option value="Bahasa Korea III">Bahasa Korea III</option>
+              <option value="Komputer Aplikasi IT III">Komputer Aplikasi IT III</option>
+              <option value="Analisis Politik Luar Negeri">Analisis Politik Luar Negeri</option>
+              <option value="Diplomasi dan Negosiasi">Diplomasi dan Negosiasi</option>
+              <option value="Komunikasi Gender">Komunikasi Gender (Gender & Seksualitas)</option>
+              <option value="Organisasi Internasional">Organisasi Internasional</option>
+              <option value="Teori Hubungan Internasional I">Teori Hubungan Internasional I</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Detail Jadwal Terpilih</label>
+            <div id="jadwalInfoBox" class="info-box">Silakan pilih mata kuliah di atas untuk melihat detail hari, waktu, dosen, dan ruangan.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Status Kehadiran</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="status" value="Hadir" required> Hadir</label>
+              <label class="radio-label"><input type="radio" name="status" value="Izin"> Izin</label>
+              <label class="radio-label"><input type="radio" name="status" value="Sakit"> Sakit</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Bukti Presensi / Foto (Otomatis Upload ke Drive)</label>
+            <input type="file" id="fileBukti" accept="image/*,.pdf" required>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn"><i class="fas fa-paper-plane"></i> Kirim Absensi</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- SEKSI 2: INFORMASI JADWAL -->
+    <div id="jadwal" class="section">
+      <div class="card">
+        <h2 style="color: #c084fc; margin-bottom: 20px;"><i class="fas fa-list-ol"></i> Jadwal Perkuliahan Semester HI 1 / 2025</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Mata Kuliah</th>
+              <th>SKS</th>
+              <th>Dosen</th>
+              <th>Hari</th>
+              <th>Jam</th>
+              <th>Ruangan</th>
+            </tr>
+          </thead>
+          <tbody id="tabelJadwal">
+            <!-- Data Jadwal Otomatis Diisi via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var jadwalList = [
+      { no: 1, nama: "Kewirausahaan I", sks: 2, dosen: "Prof. Dr. Umi Narimawati, Dra., SE., M.Si., M.Pd.", hari: "Rabu", jam: "15.20 - 17.00", ruang: "R. Aula/5" },
+      { no: 2, nama: "Bahasa Inggris II", sks: 2, dosen: "Sufiyah Assegaf, M.Si.", hari: "Senin", jam: "14.30 - 16.10", ruang: "R. Aula/5" },
+      { no: 3, nama: "Bahasa Korea III", sks: 2, dosen: "Sani Hanafiah S.E., BBA", hari: "Rabu", jam: "10.20 - 12.00", ruang: "R. Aula/5" },
+      { no: 4, nama: "Komputer Aplikasi IT III", sks: 2, dosen: "Obi Pratama, S.Sos., M.B.A.", hari: "Jum'at", jam: "07.00 - 08.40", ruang: "R. Labkom3/5" },
+      { no: 5, nama: "Analisis Politik Luar Negeri", sks: 2, dosen: "Agung Prija Utama, S.H.Int., M.I.Pol.", hari: "Kamis", jam: "09.30 - 11.10", ruang: "R. RA1/5" },
+      { no: 6, nama: "Diplomasi dan Negosiasi", sks: 3, dosen: "Widiandaru Wiryawan, S.IP., M.Si", hari: "Kamis", jam: "07.00 - 09.30", ruang: "R. RA1/5" },
+      { no: 7, nama: "Komunikasi Gender", sks: 2, dosen: "Sintia Catur Sutantri, S.Sos., M.I.Pol.", hari: "Senin", jam: "07.00 - 08.40", ruang: "R. RA1/5" },
+      { no: 8, nama: "Organisasi Internasional", sks: 2, dosen: "Risalatu Mirajiah, S.IP., M.Si.", hari: "Rabu", jam: "12.50 - 14.30", ruang: "R. RA1/5" },
+      { no: 9, nama: "Teori Hubungan Internasional I", sks: 3, dosen: "Dr. Apriadi, S.IP., M.A.", hari: "Senin", jam: "08.40 - 11.10", ruang: "R. RA1/5" }
+    ];
+
+    window.onload = function() {
+      var tbody = document.getElementById('tabelJadwal');
+      tbody.innerHTML = jadwalList.map(item => `
+        <tr>
+          <td>${item.no}</td>
+          <td><b>${item.nama}</b></td>
+          <td>${item.sks}</td>
+          <td>${item.dosen}</td>
+          <td>${item.hari}</td>
+          <td>${item.jam}</td>
+          <td>${item.ruang}</td>
+        </tr>
+      `).join('');
+    };
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active-section'));
+      document.getElementById(tabId).classList.add('active-section');
+    }
+
+    function updateJadwalInfo() {
+      var selected = document.getElementById('matkul').value;
+      var box = document.getElementById('jadwalInfoBox');
+      var match = jadwalList.find(item => item.nama.includes(selected) || selected.includes(item.nama));
+
+      if (match) {
+        box.innerHTML = `<b>Hari:</b> ${match.hari} | <b>Waktu:</b> ${match.jam} | <b>Dosen:</b> ${match.dosen} | <b>Ruang:</b> ${match.ruang}`;
+      } else {
+        box.innerHTML = "Silakan pilih mata kuliah di atas untuk melihat detail jadwal.";
+      }
+    }
+
+    function handleAbsensiSubmit(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerText = 'Mengunggah & Menyimpan...';
+
+      var fileInput = document.getElementById('fileBukti');
+      var file = fileInput.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        var payload = {
+          nama: document.getElementById('nama').value,
+          nim: document.getElementById('nim').value,
+          kelas: document.getElementById('kelas').value,
+          matkul: document.getElementById('matkul').value,
+          jadwalDetail: document.getElementById('jadwalInfoBox').innerText,
+          status: document.querySelector('input[name="status"]:checked').value,
+          fileData: evt.target.result,
+          fileName: file.name,
+          fileType: file.type
+        };
+
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+          google.script.run.withSuccessHandler(function(res) {
+            alert(res.message);
+            document.getElementById('formAbsensi').reset();
+            btn.disabled = false;
+            btn.innerText = 'Kirim Absensi';
+          }).submitAbsensi(payload);
+        } else {
+          alert('Berhasil disimulasikan! (Jalankan di Google Apps Script untuk sync otomatis)');
+          btn.disabled = false;
+          btn.innerText = 'Kirim Absensi';
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+</body>
+</html>
