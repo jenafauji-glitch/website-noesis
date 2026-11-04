@@ -234,19 +234,7 @@
         }
       };
       reader.readAsDataURL(file);
-    }<script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbwR5D-08DlKMmKhM91IjT7RSscep3cFb7ZOPoQeRmrtRbI9iKXRaR0gtcUst20GsQ29GA/exec';
-  const form = document.forms['myForm'];
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => {
-        alert('Data berhasil dikirim dan tersimpan di Cloud Google!');
-        form.reset();
-      })
-      .error(error => console.error('Error!', error.message));
-  });
+    }
   </script>
 </body>
 </html>
