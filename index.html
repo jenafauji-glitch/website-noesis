@@ -234,21 +234,7 @@
         }
       };
       reader.readAsDataURL(file);
-    }
-  </script>
-</body>
-<form id="myForm">
-  <input type="text" name="Nama" placeholder="Nama Lengkap" required />
-  <input type="email" name="Email" placeholder="Alamat Email" required />
-  <input type="number" name="Nim" placeholde="Nim" required />
-  <input type="kelas"  name="Kelas" placeholder="Kelas"required />
-  <input type="Status" name="Status" placeholde="Status" required />
-  <input type="linkfoto" name="Link Foto" placeholder="Link Foto" required />
-  <textarea name="Pesan" placeholder="Pesan Anda" required></textarea>
-  <button type="submit">Kirim Data</button>
-</form>
-
-<script>
+    }<script>
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwR5D-08DlKMmKhM91IjT7RSscep3cFb7ZOPoQeRmrtRbI9iKXRaR0gtcUst20GsQ29GA/exec';
   const form = document.forms['myForm'];
 
@@ -261,5 +247,6 @@
       })
       .error(error => console.error('Error!', error.message));
   });
-</script>
+  </script>
+</body>
 </html>
